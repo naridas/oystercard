@@ -7,6 +7,7 @@ describe Oystercard do
     loaded_card.top_up(Oystercard::MAXIMUM_BALANCE)
     loaded_card
   end
+  let(:station) {double (:station)}
 
   context "when new card issues" do
     it "has initial balance" do
@@ -32,7 +33,7 @@ describe Oystercard do
 
   context "when touch in" do
     it "requires a minimal balance of £1" do
-      expect{ subject.touch_in }.to raise_error "Not enough balance on card"
+      expect{ subject.touch_in(station) }.to raise_error "Not enough balance on card"
     end
   end
 
@@ -44,14 +45,27 @@ describe Oystercard do
 
   context "add touch_in and out" do
     it "can touch in" do
-      loaded_card.touch_in
+      loaded_card.touch_in(station)
       expect(loaded_card).to be_in_journey
     end
 
     it "can touch out" do
-      loaded_card.touch_in
+      loaded_card.touch_in(station)
       loaded_card.touch_out
       expect(loaded_card).not_to be_in_journey
+    end
+  end
+
+  context "journey history" do
+    it "remembers the entry station when touch_in" do
+      loaded_card.touch_in(station)
+      expect(loaded_card.entry_station).to eq station
+    end
+
+    it "forgets the entry station when touch_out" do
+      loaded_card.touch_in(station)
+      loaded_card.touch_out
+      expect(loaded_card.entry_station).to be nil
     end
   end
 end
