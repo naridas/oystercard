@@ -1,6 +1,7 @@
 require "oystercard"
 
 describe Oystercard do
+  let(:entry_station) { double(:entry_station) }
 
   let(:loaded_card) do
     loaded_card = Oystercard.new
@@ -32,7 +33,7 @@ describe Oystercard do
 
   context "when touch in" do
     it "requires a minimal balance of £1" do
-      expect{ subject.touch_in }.to raise_error "Not enough balance on card"
+      expect{ subject.touch_in(entry_station)}.to raise_error "Not enough balance on card"
     end
   end
 
@@ -44,14 +45,35 @@ describe Oystercard do
 
   context "add touch_in and out" do
     it "can touch in" do
-      loaded_card.touch_in
+      loaded_card.touch_in(entry_station)
       expect(loaded_card).to be_in_journey
     end
 
     it "can touch out" do
-      loaded_card.touch_in
+      loaded_card.touch_in(entry_station)
       loaded_card.touch_out
       expect(loaded_card).not_to be_in_journey
     end
   end
+
+  context " history journeys " do
+    it "remembers the entry_station when touch in" do
+      loaded_card.touch_in(entry_station)
+      expect(loaded_card.entry_station).to eq entry_station
+    end
+
+    it "forgets the entry station when touch out" do
+      loaded_card.touch_in(entry_station)
+      loaded_card.touch_out
+      expect(loaded_card.entry_station).to be nil
+    end
+  end
 end
+
+
+ # Write a test that expects the card to remember the entry station after the touch in
+ # Update the touch_in method to accept the entry station using a double
+ # Update existing tests to pass a station to the touch_in method - you may need to declare your double in a let statement at the top of your describe block
+ # Expose entry_station instance variable using an attribute reader
+ # Make the card forget the entry station on touch out by setting it to nil
+ # When your tests are all green, refactor to remove the in_journey variable. Rewrite the in_journey? method to infer its status based on whether or not there is an entry station
