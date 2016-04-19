@@ -36,10 +36,9 @@ describe Oystercard do
     end
   end
 
-  context "#deduct" do
-    it "deducts the fare from the card" do
-      subject.top_up(30)
-      expect{ subject.deduct 10 }.to change{ subject.balance }.by -10
+  context "charging the customer" do
+    it "deducts minimum fare when touch_out" do
+      expect{ loaded_card.touch_out }.to change{ loaded_card.balance }.by -Oystercard::MINIMUM_FARE
     end
   end
 
