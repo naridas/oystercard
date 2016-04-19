@@ -1,6 +1,13 @@
 require "oystercard"
 
 describe Oystercard do
+
+  let(:loaded_card) do
+    loaded_card = Oystercard.new
+    loaded_card.top_up(Oystercard::MAXIMUM_BALANCE)
+    loaded_card
+  end
+
   context "when new card issues" do
     it "has initial balance" do
       expect(subject.balance).to eq(0)
@@ -23,6 +30,12 @@ describe Oystercard do
     end
   end
 
+  context "when touch in" do
+    it "requires a minimal balance of £1" do
+      expect{ subject.touch_in }.to raise_error "Not enough balance on card"
+    end
+  end
+
   context "#deduct" do
     it "deducts the fare from the card" do
       subject.top_up(30)
@@ -32,20 +45,14 @@ describe Oystercard do
 
   context "add touch_in and out" do
     it "can touch in" do
-      subject.touch_in
-      expect(subject).to be_in_journey
-      #expect(subject.in_journey?).to be true
+      loaded_card.touch_in
+      expect(loaded_card).to be_in_journey
     end
 
     it "can touch out" do
-      subject.touch_in
-      subject.touch_out
-      expect(subject).not_to be_in_journey
-      #expect(subject.in_journey?).to be false
+      loaded_card.touch_in
+      loaded_card.touch_out
+      expect(loaded_card).not_to be_in_journey
     end
   end
-
-
-
 end
-#To close this issue, you"ll need to test-drive three methods: touch_in, touch_out and in_journey?. Don"t try to write all tests in one go: consider the test that you can write first that will rely on only one method and then write more complex tests.
