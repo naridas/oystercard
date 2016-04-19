@@ -2,6 +2,7 @@ require "oystercard"
 
 describe Oystercard do
   let(:entry_station) { double(:entry_station) }
+  let(:exit_station) { double(:exit_station) }
 
   let(:loaded_card) do
     loaded_card = Oystercard.new
@@ -17,6 +18,10 @@ describe Oystercard do
 
     it "journey? is false" do
       expect(subject.in_journey?).to be false
+    end
+
+    it "list of journeys is empty" do
+      expect(subject.journeys).to be_empty
     end
   end
 
@@ -40,7 +45,7 @@ describe Oystercard do
 
   context "charging the customer" do
     it "deducts minimum fare when touch_out" do
-      expect{ loaded_card.touch_out }.to change{ loaded_card.balance }.by -Oystercard::MINIMUM_FARE
+      expect{ loaded_card.touch_out(exit_station) }.to change{ loaded_card.balance }.by -Oystercard::MINIMUM_FARE
     end
   end
 
@@ -52,13 +57,18 @@ describe Oystercard do
 
     it "can touch out" do
       loaded_card.touch_in(entry_station)
-      loaded_card.touch_out
+      loaded_card.touch_out(exit_station)
       expect(loaded_card).not_to be_in_journey
     end
   end
 
-<<<<<<< HEAD
   context " history journeys " do
+    # it 'stores exit station' do
+    #   loaded_card.touch_in(entry_station)
+    #   loaded_card.touch_out(exit_station)
+    #   expect(loaded_card.exit_station).to eq exit_station
+    # end
+
     it "remembers the entry_station when touch in" do
       loaded_card.touch_in(entry_station)
       expect(loaded_card.entry_station).to eq entry_station
@@ -66,8 +76,35 @@ describe Oystercard do
 
     it "forgets the entry station when touch out" do
       loaded_card.touch_in(entry_station)
-      loaded_card.touch_out
+      loaded_card.touch_out(exit_station)
       expect(loaded_card.entry_station).to be nil
     end
   end
+
+  context "saving previous journeys" do
+    let(:test_journey){ {entry_station: entry_station, exit_station: exit_station} }
+    before(:each) do
+      loaded_card.touch_in(entry_station)
+      loaded_card.touch_out(exit_station)
+    end
+
+    # it "stores one journey" do
+    #   expect(loaded_card.journey.keys).to include :entry_station
+    #   expect(loaded_card.journey.values).to include exit_station
+    # end
+
+    it "adds the current journey to the journey history" do
+      #test_journey = Hash.new
+      #test_journey[:entry_station] = exit_station
+      expect(loaded_card.journeys.last).to eq test_journey
+    end
+  end
 end
+
+
+
+# Store the list of journeys as an instance variable and expose it with an attribute reader - you will need to refactor the touch_out method to accept an exit station
+#  Use a hash to store one journey (set of an entry and exit stations)
+#  Write a test that checks that the card has an empty list of journeys by default
+#  Write a test that checks that touching in and out creates one journey
+#  Keep all code including tests DRY
