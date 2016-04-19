@@ -8,6 +8,7 @@ describe Oystercard do
     loaded_card.top_up(Oystercard::MAXIMUM_BALANCE)
     loaded_card
   end
+  let(:station) {double (:station)}
 
   context "when new card issues" do
     it "has initial balance" do
@@ -33,7 +34,7 @@ describe Oystercard do
 
   context "when touch in" do
     it "requires a minimal balance of £1" do
-      expect{ subject.touch_in(entry_station)}.to raise_error "Not enough balance on card"
+      expect{ subject.touch_in(station) }.to raise_error "Not enough balance on card"
     end
   end
 
@@ -56,6 +57,7 @@ describe Oystercard do
     end
   end
 
+<<<<<<< HEAD
   context " history journeys " do
     it "remembers the entry_station when touch in" do
       loaded_card.touch_in(entry_station)
@@ -69,11 +71,3 @@ describe Oystercard do
     end
   end
 end
-
-
- # Write a test that expects the card to remember the entry station after the touch in
- # Update the touch_in method to accept the entry station using a double
- # Update existing tests to pass a station to the touch_in method - you may need to declare your double in a let statement at the top of your describe block
- # Expose entry_station instance variable using an attribute reader
- # Make the card forget the entry station on touch out by setting it to nil
- # When your tests are all green, refactor to remove the in_journey variable. Rewrite the in_journey? method to infer its status based on whether or not there is an entry station

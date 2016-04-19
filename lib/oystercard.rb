@@ -16,7 +16,7 @@ class Oystercard
   end
 
   def in_journey?
-    @in_journey  # we need to refactor
+    !!entry_station
   end
 
   def touch_in(entry_station)
@@ -27,7 +27,6 @@ class Oystercard
 
   def touch_out
     deduct(MINIMUM_FARE)
-    @in_journey = false
     @entry_station = nil
   end
 
