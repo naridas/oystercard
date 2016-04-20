@@ -8,7 +8,7 @@ class Oystercard
   def initialize
     @balance = 0
     @journeys = []
-    @journey = Hash.new
+    @journey = {}
   end
 
   def top_up(amount)
