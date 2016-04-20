@@ -2,7 +2,7 @@ class Station
 
   attr_reader :name, :zone
 
-  def initialize(name, zone) #changed to symbols
+  def initialize(name, zone)
     @name = name
     @zone = zone
   end
