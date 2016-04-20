@@ -15,7 +15,7 @@ describe Journey do
   end
 
   context 'given an entry station' do
-    subject {described_class.new(entry_station: station)}
+    subject {described_class.new(entry_station = station)}
 
     it 'has an entry station' do
       expect(subject.entry_station).to eq station
@@ -42,10 +42,3 @@ describe Journey do
     end
   end
 end
-    # it "journey? is false" do
-    #   expect(subject.in_journey?).to be false
-    # end
-
-    # it "list of journeys is empty" do
-    #   expect(subject.journeys).to be_empty
-    # end

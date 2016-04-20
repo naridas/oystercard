@@ -2,7 +2,7 @@
 class Journey
 	PENALTY_FARE = 6
 	attr_reader :entry_station, :exit_station
-	def initialize(entry_station: nil)#nil if the person doesn't touch in
+	def initialize(entry_station = nil)#nil if the person doesn't touch in
 		@entry_station = entry_station
 		# @journeys = []
     	# @journey = {}
