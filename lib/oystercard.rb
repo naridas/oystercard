@@ -24,9 +24,6 @@ class Oystercard
     deduct(MINIMUM_FARE)
     @entry_station = nil
   end
-  def in_journey?
-   !!entry_station
-  end
 
   private
   def deduct(fare)

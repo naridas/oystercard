@@ -3,7 +3,7 @@ class Journey
   PENALTY_FARE = 6
   attr_reader :entry_station, :exit_station
 
-  def initialize(entry_station = nil)
+  def initialize(entry_station:nil)
     @entry_station = entry_station
     @complete = false
   end
@@ -19,9 +19,9 @@ class Journey
   end
 
   # def zones
-  # 	@zonea = 5
+  # 	@zonea = 1
   # 	@zoneb = 1
-  # 	(@zone1 - @zone2).abs
+  # 	(@zonea - @zoneb).abs
   # end
 
   def fare
