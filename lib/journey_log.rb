@@ -18,6 +18,8 @@ class JourneyLog
     journey_log << @current_journey
     @current_journey = nil
   end
+  def journey_log
+  end
 
   private
 
