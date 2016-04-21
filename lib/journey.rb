@@ -1,3 +1,5 @@
+require_relative 'oystercard'
+require_relative 'journey_log'
 class Journey
 
   PENALTY_FARE = 6
@@ -18,15 +20,12 @@ class Journey
     @complete
   end
 
-  # def zones
-  # 	@zonea = 1
-  # 	@zoneb = 1
-  # 	(@zonea - @zoneb).abs
-  # end
+  def zones
+   	 [entry_station, exit_station].map(&:zone).sort{|a,b| b <=> a }
+  end
 
   def fare
     return PENALTY_FARE if (exit_station.nil? || entry_station.nil?)
-		# zones + 1
-    1
+		zones.inject(:-) + 1
   end
 end

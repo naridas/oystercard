@@ -1,6 +1,7 @@
 class JourneyLog
 
-  attr_reader  :journey_class
+  attr_reader :journey_class, :journey_log
+  
 
   def initialize(journey_class:Journey)
     @journey_class = journey_class
@@ -9,20 +10,20 @@ class JourneyLog
   end
 
   def start(entry_station)
-    @journey_log << (journey_class.new(entry_station:entry_station)) #[{entry_station:entry_station}]
-    @current_journey = journey_log.last #{entry_station:entry_station}
+    @journey_log << (journey_class.new(entry_station:entry_station))
+    @current_journey = @journey_log.last 
   end
 
   def finish(exit_station)
     @current_journey.exit(exit_station)
-    @journey_log << @current_journey
     @current_journey = nil
+    @journey_log.last 
   end
   
   def journey_log
     @journey_log.dup
   end
-
+  
   private
 
   def current_journey

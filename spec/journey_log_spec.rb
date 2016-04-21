@@ -3,7 +3,7 @@ describe JourneyLog do
 
   let(:journey)         { double :journey }
   let(:station)         { double :station }
-  let(:journey_class)   { double :journey_class, new: journey, exit: journey }
+  let(:journey_class)   { double :journey_class, new: journey }
   subject {described_class.new(journey_class: journey_class)}
 
   describe '#start' do
@@ -17,7 +17,5 @@ describe JourneyLog do
       expect(subject.journey_log).to include journey
     end
   end
-
-
 
 end

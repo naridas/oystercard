@@ -1,6 +1,23 @@
 require 'journey'
 describe Journey do
   let(:station) { double :station, zone: 1}
+  let(:exit_station) { double :station, zone: 3 }
+
+  context '#zones' do
+  
+    it 'calculates the correct fare for moving from zone 1 to zone 3' do
+      subject(:journey){described_class.new(entry_station: station)}
+      journey.exit(exit_station)
+      update_zones(1,3)
+      expect(journey.fare).to eq 3
+    end
+    
+    def update_zones(entry_zone, exit_zone)
+        allow(station).to receive(:zone).and_return(entry_zone)
+        allow(other_station).to receive(:zone).and_return(exit_zone)
+    end
+  
+  end
 
   it "knows if a journey is not complete" do
     expect(subject).not_to be_complete
