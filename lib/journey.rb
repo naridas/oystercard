@@ -8,7 +8,7 @@ class Journey
     @complete = false
   end
 
-  def finish(exit_station = nil)
+  def exit(exit_station = nil)
     @exit_station = exit_station
     @complete = true
     self
