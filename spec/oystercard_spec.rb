@@ -15,14 +15,6 @@
      it "has initial balance" do
        expect(subject.balance).to eq(0)
      end
-
-     xit "journey? is false" do
-       expect(subject.in_journey?).to be false
-     end
-
-     it "list of journeys is empty" do
-       expect(subject.journeys).to be_empty
-     end
    end
 
    context "#top_up" do
@@ -62,26 +54,6 @@
        loaded_card.touch_in(entry_station)
        loaded_card.touch_out(exit_station)
        expect(loaded_card).not_to be_in_journey
-     end
-   end
-
-   
-
-   context "saving previous journeys" do
-     let(:test_journey){ {entry_station: entry_station, exit_station: exit_station} }
-     before(:each) do
-       loaded_card.touch_in(entry_station)
-   loaded_card.touch_out(exit_station)
-     end
-     # it "stores one journey" do
-     #   expect(loaded_card.journey.keys).to include :entry_station
-     #   expect(loaded_card.journey.values).to include exit_station
-     # end
-
-     xit "adds the current journey to the journey history" do
-       #test_journey = Hash.new
-       #test_journey[:entry_station] = exit_station
-       expect(loaded_card.journeys.last).to eq test_journey
      end
    end
  end
